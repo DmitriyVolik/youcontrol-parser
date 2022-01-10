@@ -10,7 +10,7 @@ namespace selenium_test.Core.Entities
     public class Config
     {
         public string FilePathInput { get; set; } = "input.txt";
-        public string FilePathOutput { get; set; } = "output.txt";
+        public string FilePathOutput { get; set; } = "fops.txt";
         public string CurrentCity { get; set; } = "";
         public int Counter { get; set; } = 1;
         public bool IsProxy { get; set; } = false;

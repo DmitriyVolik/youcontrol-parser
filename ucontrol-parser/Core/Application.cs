@@ -4,6 +4,7 @@ using selenium_test.Core.Entities;
 using selenium_test.Core.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -18,7 +19,7 @@ namespace selenium_test.Core
         {
             configuration = FileHelper.LoadConfiguration();
             cities = FileHelper.ReadUrls(configuration);
-            Console.WriteLine($"Всего найдено {cities.Count} ссылок.");
+            Console.WriteLine($"Всего найдено ссылок: {cities.Count}");
         }
         public Config configuration { get; set; }
         public List<string> cities = null;
@@ -37,13 +38,13 @@ namespace selenium_test.Core
             {
                 configuration.CurrentCity = cities[0];
             }
-
             while (true)
             {
                 try
                 {
                     string data = "";
                     string page = web.DownloadString($"{configuration.CurrentCity}{configuration.Counter}/");
+                    page = page.Replace("&#039;", "'");
                     HtmlDocument document = new HtmlDocument();
                     document.LoadHtml(page);
                     if (document.DocumentNode.InnerHtml.Contains("403 Forbidden"))
@@ -85,7 +86,7 @@ namespace selenium_test.Core
                         }
                     }
                 }
-                Thread.Sleep(3000);
+                Thread.Sleep(1000);
             }
         }
     }
